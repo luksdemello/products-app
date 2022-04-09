@@ -3,12 +3,7 @@ import { prisma } from '../../../../database/PrismaClient';
 
 class FindAllProvidersUseCase {
   async execute(): Promise<Provider[]> {
-    const providers = await prisma.provider.findMany({
-      include: {
-        address: true,
-        products: true,
-      },
-    });
+    const providers = await prisma.provider.findMany();
 
     return providers;
   }
