@@ -2,13 +2,14 @@ import { validate } from 'class-validator';
 import { Request, Response } from 'express';
 import { ResponseCode } from '../../../../utils/ResponseCode';
 import { ProviderViewModel } from '../../view_models/ProviderViewModel';
-import { CreateProviderUseCase } from './CreateProviderUseCase';
+import { UpdateProviderUseCase } from './UpdateProviderUseCase';
 
-class CreateProviderController {
+class UpdateProviderController {
   async handler(request: Request, response: Response): Promise<Response> {
-    const { active, document, name, type, address } = request.body;
+    const { uid } = request.params;
+    const { active, document, name, type } = request.body;
 
-    const createProviderUseCase = new CreateProviderUseCase();
+    const updateProviderUseCase = new UpdateProviderUseCase();
 
     const providerViewModel = new ProviderViewModel({
       name,
@@ -25,17 +26,17 @@ class CreateProviderController {
         .json(errors.map((v) => v.constraints));
     }
 
-    const provider = await createProviderUseCase.execute({
+    await updateProviderUseCase.execute({
       provider: {
         ...providerViewModel,
       },
-      address,
+      uid,
     });
 
-    return response.status(ResponseCode.Created).json(provider);
+    return response.status(ResponseCode.Success).json({ message: 'Success' });
   }
 }
 
-const createProviderController = new CreateProviderController();
+const updateProviderController = new UpdateProviderController();
 
-export { createProviderController };
+export { updateProviderController };
