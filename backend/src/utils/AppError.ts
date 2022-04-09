@@ -3,7 +3,7 @@ class AppError {
 
   readonly status: number;
 
-  constructor({ message, status = 400 }: AppError) {
+  constructor({ message, status }: AppError) {
     this.message = message;
     this.status = status;
   }

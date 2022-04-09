@@ -11,8 +11,42 @@ datasource db {
 }
 
 model Provider {
-  uid      String @id @default(uuid())
+  uid      String    @id @default(uuid())
   name     String
-  document String @unique
+  document String    @unique
   type     String
+  active   Boolean
+  address  Address?
+  products Product[]
+
+  @@map("tb_providers")
+}
+
+model Address {
+  uid          String   @id @default(uuid())
+  zip_code     String
+  street       String
+  number       String
+  complement   String
+  district     String
+  city         String
+  state        String   @db.Char(2)
+  provider_uid String   @unique
+  provider     Provider @relation(fields: [provider_uid], references: [uid], onDelete: Cascade)
+
+
+  @@map("tb_address")
+}
+
+model Product {
+  uid          String   @id @default(uuid())
+  name         String
+  description  String
+  image_url    String
+  price        Float
+  active       Boolean
+  provider_uid String
+  provider     Provider @relation(fields: [provider_uid], references: [uid])
+
+  @@map("tb_products")
 }
