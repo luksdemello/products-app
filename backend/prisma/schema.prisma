@@ -45,6 +45,7 @@ model Product {
   image_url    String
   price        Float
   active       Boolean
+  created_at   DateTime
   provider_uid String
   provider     Provider @relation(fields: [provider_uid], references: [uid])
 

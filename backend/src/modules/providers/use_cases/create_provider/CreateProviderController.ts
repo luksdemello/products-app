@@ -20,9 +20,7 @@ class CreateProviderController {
     const errors = await validate(providerViewModel);
 
     if (errors.length > 0) {
-      return response
-        .status(ResponseCode.BadRequest)
-        .json(errors.map((v) => v.constraints));
+      return response.status(ResponseCode.BadRequest).json(errors);
     }
 
     const provider = await createProviderUseCase.execute({
