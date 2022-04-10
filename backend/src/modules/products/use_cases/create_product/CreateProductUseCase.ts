@@ -5,7 +5,8 @@ import { ICreateProductRequest } from './CreateProductRequest';
 
 class CreateProductUseCase {
   async execute({ data, imageData }: ICreateProductRequest): Promise<Product> {
-    const image_url = writeFile.upload(imageData.image, imageData.image_name);
+    const imageBase64 = imageData.image.split(',')[1];
+    const image_url = writeFile.upload(imageBase64, imageData.image_name);
 
     const product = await prisma.product.create({
       data: {
