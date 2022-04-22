@@ -6,26 +6,13 @@ import { CreateProductUseCase } from './CreateProductUseCase';
 
 class CreateProductController {
   async handler(request: Request, response: Response): Promise<Response> {
-    const {
-      active,
-      description,
-      created_at,
-      image,
-      imageUpload,
-      name,
-      price,
-      provider_uid,
-    } = request.body;
+    const { product } = request.body;
+    const { file } = request;
+
+    const productJson = JSON.parse(product);
 
     const prodcutViewModel = new ProdcutViewModel({
-      active,
-      description,
-      created_at,
-      image,
-      imageUpload,
-      name,
-      price,
-      provider_uid,
+      ...productJson,
     });
 
     const errors = await validate(prodcutViewModel);
@@ -36,17 +23,14 @@ class CreateProductController {
 
     const createProductUseCase = new CreateProductUseCase();
 
-    const product = await createProductUseCase.execute({
+    const result = await createProductUseCase.execute({
       data: {
         ...prodcutViewModel,
       },
-      imageData: {
-        image,
-        image_name: imageUpload,
-      },
+      file: file ?? null,
     });
 
-    return response.status(ResponseCode.Success).json(product);
+    return response.status(ResponseCode.Success).json(result);
   }
 }
 

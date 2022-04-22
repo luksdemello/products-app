@@ -8,12 +8,6 @@ class ProdcutViewModel {
   description: string;
 
   @IsNotEmpty({ message: 'The field $property is required' })
-  imageUpload: string;
-
-  @IsNotEmpty({ message: 'The field $property is required' })
-  image: string;
-
-  @IsNotEmpty({ message: 'The field $property is required' })
   price: number;
 
   @IsNotEmpty({ message: 'The field $property is required' })
@@ -27,22 +21,18 @@ class ProdcutViewModel {
 
   constructor({
     name,
-    image,
     price,
     created_at,
     active,
     provider_uid,
     description,
-    imageUpload,
   }: ProdcutViewModel) {
     this.name = name;
     this.description = description;
-    this.image = image;
     this.price = price;
     this.created_at = created_at;
     this.active = active;
     this.provider_uid = provider_uid;
-    this.imageUpload = imageUpload;
   }
 }
 

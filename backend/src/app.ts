@@ -6,8 +6,7 @@ import { errorhandler } from './shared/middlewares/errorHandler';
 
 const app = express();
 
-app.use(express.urlencoded());
-app.use(express.raw());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(router);
 app.use(errorhandler);
